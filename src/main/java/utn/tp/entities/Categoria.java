@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package utn.tp.entities;
 
 import jakarta.persistence.Basic;
@@ -17,10 +13,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import jakarta.validation.constraints.Size;
 
-/**
- *
- * @author Dante Maida
- */
 @Getter
 @Setter
 @AllArgsConstructor
@@ -30,13 +22,15 @@ import jakarta.validation.constraints.Size;
 @Entity
 @Table(name = "categoria")
 public class Categoria {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    
-    @Basic
-    @Size(min = 3, max = 500)
-    private String descripcion;
-    
-    
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
+
+  @Basic
+  @Size(min = 3, max = 100)
+  private String descripcion;
+
+//  @OneToMany(mappedBy = "categoria", fetch = FetchType.EAGER)
+//  private List<Orden> ordenes = new ArrayList<>();  
 }

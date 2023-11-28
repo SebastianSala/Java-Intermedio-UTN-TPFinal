@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package utn.tp.entities;
 
 import jakarta.persistence.Basic;
@@ -16,10 +12,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- *
- * @author Dante Maida
- */
 @Getter
 @Setter
 @AllArgsConstructor
@@ -29,12 +21,16 @@ import lombok.Setter;
 @Entity
 @Table(name = "tecnico")
 public class Tecnico {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    
-    @Basic
-    private String nombre;
-    private String apellido;
-    
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
+
+  @Basic
+  private String nombre;
+  private String apellido;
+  
+//  @OneToMany(mappedBy = "tecnico", fetch = FetchType.EAGER)
+//  private List<Orden> ordenes = new ArrayList<>();
+
 }

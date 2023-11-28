@@ -17,16 +17,18 @@ import jakarta.persistence.Table;
 @Data
 
 @Entity
-//@Table(name = "cliente", uniqueConstraints = @UniqueConstraint(columnNames = "id_dni"))
 @Table(name = "cliente")
 public class Cliente {
 
   @Id
-  private Integer idDni;
+  private Integer dni;
 
   @Basic
   private String nombre;
   private String direcction;
   private String email;
+
+//  @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
+//  private List<Orden> ordenes = new ArrayList<>();
 
 }
