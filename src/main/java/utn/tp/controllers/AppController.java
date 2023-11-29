@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import static java.util.stream.Collectors.joining;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -87,19 +88,16 @@ public class AppController {
 
   @GetMapping("/ordenes/{fechaInicial}/{fechaFinal}")
   public String mostrarOrdenes(
-      @PathVariable String fechaInicial,
-      @PathVariable String fechaFinal) {
-
-    LocalDate inicio = LocalDate.parse(fechaInicial, formatter);
-    LocalDate fin = LocalDate.parse(fechaFinal);
+      @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate fechaInicial,
+      @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate fechaFinal) {
 
     List<Orden> ordenes = this.ordenRepository.findAll();
-    List<Orden> ordenesFiltradas = ordenes.stream().filter(orden -> ((orden.getFecha().isAfter(inicio)) && (orden.getFecha().isBefore(fin)))).collect(Collectors.toList());
+    List<Orden> ordenesFiltradas = ordenes.stream().filter(orden -> ((orden.getFecha().isAfter(fechaInicial)) && (orden.getFecha().isBefore(fechaFinal)))).collect(Collectors.toList());
 
-    String textoOrdenes = ordenesFiltradas.stream().map(Orden::toString).collect(joining("\n"));
+    String textoOrdenes = ordenesFiltradas.stream().map(Orden::toString).collect(joining("<br><br>\n"));
+    System.out.println("Las ordenes:\n" + textoOrdenes);
 
-    return "Ordenes entre " + fechaInicial + " y " + fechaFinal + ":\n" + textoOrdenes;
-//    return textoOrdenes;
+    return "Ordenes entre " + fechaInicial + " y " + fechaFinal + ":<br><br>" + textoOrdenes;
 
   }
 

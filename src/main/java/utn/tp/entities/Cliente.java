@@ -27,5 +27,5 @@ public class Cliente {
   private String nombre;
   private String direcction;
   private String mail;
-  
+
 }
