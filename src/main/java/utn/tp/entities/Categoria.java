@@ -31,6 +31,4 @@ public class Categoria {
   @Size(min = 3, max = 100)
   private String descripcion;
 
-//  @OneToMany(mappedBy = "categoria", fetch = FetchType.EAGER)
-//  private List<Orden> ordenes = new ArrayList<>();  
 }

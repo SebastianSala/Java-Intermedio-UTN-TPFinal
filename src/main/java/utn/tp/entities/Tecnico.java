@@ -28,9 +28,5 @@ public class Tecnico {
 
   @Basic
   private String nombre;
-  private String apellido;
-  
-//  @OneToMany(mappedBy = "tecnico", fetch = FetchType.EAGER)
-//  private List<Orden> ordenes = new ArrayList<>();
 
 }

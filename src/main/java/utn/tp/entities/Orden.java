@@ -38,7 +38,7 @@ public class Orden {
   private String descripcion;
 
   @Basic
-  private float costo;
+  private double costo;
   private boolean estado; //false = pendiente, true = resuelto
 
   @Column(columnDefinition = "DATE")

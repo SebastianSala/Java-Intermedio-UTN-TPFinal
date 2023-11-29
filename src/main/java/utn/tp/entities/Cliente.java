@@ -26,9 +26,6 @@ public class Cliente {
   @Basic
   private String nombre;
   private String direcction;
-  private String email;
-
-//  @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
-//  private List<Orden> ordenes = new ArrayList<>();
-
+  private String mail;
+  
 }
