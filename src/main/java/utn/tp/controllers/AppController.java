@@ -50,18 +50,22 @@ public class AppController {
     Categoria categoria1 = new Categoria(null, "Actualizacion");
     Categoria categoria2 = new Categoria(null, "Reparacion");
     Categoria categoria3 = new Categoria(null, "Limpieza");
+    Categoria categoriaOtros = new Categoria(null, "Otros");
     Tecnico tecnico1 = new Tecnico(null, "Tecnico1");
     Tecnico tecnico2 = new Tecnico(null, "Tecnico2");
     Tecnico tecnico3 = new Tecnico(null, "Tecnico3");
+    Tecnico tecnicoDisponible = new Tecnico(null, "Tecnico Disponible");
     Cliente cliente1 = new Cliente(11111111, "Cliente1", "Direccion1", "email1");
     Cliente cliente2 = new Cliente(11111112, "Cliente2", "Direccion2", "email2");
     Cliente cliente3 = new Cliente(11111113, "Cliente3", "Direccion3", "email3");
     this.categoriaRepository.save(categoria1);
     this.categoriaRepository.save(categoria2);
     this.categoriaRepository.save(categoria3);
+    this.categoriaRepository.save(categoriaOtros);
     this.tecnicoRepository.save(tecnico1);
     this.tecnicoRepository.save(tecnico2);
     this.tecnicoRepository.save(tecnico3);
+    this.tecnicoRepository.save(tecnicoDisponible);
     this.clienteRepository.save(cliente1);
     this.clienteRepository.save(cliente2);
     this.clienteRepository.save(cliente3);
@@ -73,8 +77,8 @@ public class AppController {
     }
 
     //obtener tecnico, categoria y cliente de la db
-    Tecnico tecnico = this.tecnicoRepository.findById(idTecnico).orElse(tecnico1);
-    Categoria categoria = this.categoriaRepository.findById(idCategoria).orElse(categoria1);
+    Tecnico tecnico = this.tecnicoRepository.findById(idTecnico).orElse(tecnicoDisponible);
+    Categoria categoria = this.categoriaRepository.findById(idCategoria).orElse(categoriaOtros);
     Cliente cliente = this.clienteRepository.findById(dniCliente).get();
 
     //guardar orden
@@ -83,7 +87,7 @@ public class AppController {
     this.ordenRepository.save(nuevaOrden);
 
     String textoOrden = nuevaOrden.toString();
-    return "Orden guardada: \n" + textoOrden;
+    return "Orden guardada: <br><br>\n" + textoOrden;
   }
 
   @GetMapping("/ordenes/{fechaInicial}/{fechaFinal}")
@@ -92,7 +96,14 @@ public class AppController {
       @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate fechaFinal) {
 
     List<Orden> ordenes = this.ordenRepository.findAll();
-    List<Orden> ordenesFiltradas = ordenes.stream().filter(orden -> ((orden.getFecha().isAfter(fechaInicial)) && (orden.getFecha().isBefore(fechaFinal)))).collect(Collectors.toList());
+
+    //Si consideramos las ordenes entre 2 fechas, EXCLUYENDO los limites:
+    //List<Orden> ordenesFiltradas = ordenes.stream().filter(orden -> ((orden.getFecha().isAfter(fechaInicial)) && (orden.getFecha().isBefore(fechaFinal)))).collect(Collectors.toList());
+    //Si consideramos las ordenes entre 2 fechas, INCLUYENDO los limites:
+    List<Orden> ordenesFiltradas = ordenes.stream()
+        .filter(orden -> ((orden.getFecha().isAfter(fechaInicial) || orden.getFecha().equals(fechaInicial))
+        && (orden.getFecha().isBefore(fechaFinal) || orden.getFecha().equals(fechaFinal))))
+        .collect(Collectors.toList());
 
     String textoOrdenes = ordenesFiltradas.stream().map(Orden::toString).collect(joining("<br><br>\n"));
     System.out.println("Las ordenes:\n" + textoOrdenes);

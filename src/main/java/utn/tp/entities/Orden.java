@@ -58,4 +58,9 @@ public class Orden {
   @JoinColumn(name = "id_cliente", referencedColumnName = "dni")
   private Cliente cliente;
 
+  @Override
+  public String toString() {
+    return "Orden Id: " + this.getId() + "<br>\nDescripcion de la orden: " + this.getDescripcion() + "<br>\nCosto: $" + this.getCosto() + "<br>\nCategori­a: " + categoria.getDescripcion() + "<br>\nFecha de ingreso: " + this.getFecha() + "<br>\nTecnico: " + tecnico.getNombre() + "<br>\nCliente: " + cliente.getNombre();
+  }
+
 }
